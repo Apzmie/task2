@@ -218,6 +218,17 @@ class QuizGame:
         
         print("="*40)
 
+    def show_best_score(self):
+        """4. 최고 점수를 확인합니다."""
+        print("\n" + "="*40)
+        # [요구사항] 아직 퀴즈를 풀지 않은 경우 (최고 점수가 0인 경우) 처리
+        if self.best_score == 0:
+            print("📜 아직 기록된 점수가 없습니다.")
+            print("   첫 번째 퀴즈를 풀어 최고 기록을 세워보세요!")
+        else:
+            print(f"🏆 현재 최고 점수: {self.best_score}점")
+        print("="*40)
+
     def run(self):
         while self.is_running:
             print("\n========================================")
@@ -242,7 +253,7 @@ class QuizGame:
                 self.show_list()
                 # TODO: show_list() 구현 예정
             elif choice == 4:
-                print(f"\n🏆 최고 점수: {self.best_score}점")
+                self.show_best_score()
             elif choice == 5:
                 self.save_data()
                 print("👋 프로그램을 종료합니다.")
