@@ -126,6 +126,45 @@ class QuizGame:
                 self.save_data()
                 exit(0)
 
+    def play_game(self):
+        """1. 퀴즈 풀기 기능을 수행합니다."""
+        # [요구사항] 퀴즈가 없는 경우 처리
+        if not self.quizzes:
+            print("\n⚠️ 등록된 퀴즈가 없습니다. 퀴즈를 먼저 추가해 주세요.")
+            return
+
+        score = 0
+        total = len(self.quizzes)
+        print(f"\n🚀 퀴즈를 시작합니다! 총 {total}문제가 준비되어 있습니다.")
+
+        # [요구사항] 저장된 퀴즈를 하나씩 출제
+        for i, quiz in enumerate(self.quizzes, 1):
+            quiz.display(i)  # Quiz 클래스의 출력 기능 활용
+            
+            # [요구사항] 사용자가 정답 입력 (보디가드 메서드 활용)
+            user_answer = self.get_valid_input("정답 입력 (1-4): ", 1, 4)
+
+            # [요구사항] 정답/오답 여부 확인
+            if quiz.check_answer(user_answer):
+                print("✨ 정답입니다!")
+                score += 1
+            else:
+                print(f"❌ 틀렸습니다. 정답은 {quiz.answer}번입니다.")
+
+        # [요구사항] 모든 문제를 풀면 결과 표시
+        final_percentage = int((score / total) * 100)
+        print("\n" + "="*40)
+        print(f"🏁 퀴즈 종료!")
+        print(f"📊 맞힌 개수: {score} / {total}")
+        print(f"🏆 최종 점수: {final_percentage}점")
+        print("="*40)
+
+        # 최고 점수 갱신 및 저장
+        if final_percentage > self.best_score:
+            print("🎊 축하합니다! 최고 점수를 경신했습니다!")
+            self.best_score = final_percentage
+            self.save_data() # 점수 업데이트 후 자동 저장
+
     def run(self):
         while self.is_running:
             print("\n========================================")
@@ -141,7 +180,7 @@ class QuizGame:
             choice = self.get_valid_input("선택: ", 1, 5)
 
             if choice == 1:
-                print("\n📝 퀴즈 풀기를 시작합니다!")
+                self.play_game()
                 # TODO: play_game() 구현 예정
             elif choice == 2:
                 print("\n📌 퀴즈 추가 기능을 실행합니다.")
