@@ -229,29 +229,30 @@ class QuizGame:
             print(f"🏆 현재 최고 점수: {self.best_score}점")
         print("="*40)
 
+    def display_menu(self):
+        """[요구사항] 메뉴 표시 기능을 별도 메서드로 분리"""
+        print("\n========================================")
+        print("        🎯 나만의 퀴즈 게임 🎯")
+        print("========================================")
+        print("1. 퀴즈 풀기")
+        print("2. 퀴즈 추가")
+        print("3. 퀴즈 목록")
+        print("4. 점수 확인")
+        print("5. 종료")
+        print("========================================")
+
     def run(self):
         while self.is_running:
-            print("\n========================================")
-            print("        🎯 나만의 퀴즈 게임 🎯")
-            print("========================================")
-            print("1. 퀴즈 풀기")
-            print("2. 퀴즈 추가")
-            print("3. 퀴즈 목록")
-            print("4. 점수 확인")
-            print("5. 종료")
-            print("========================================")
+            self.display_menu()
             
             choice = self.get_valid_input("선택: ", 1, 5)
 
             if choice == 1:
                 self.play_game()
-                # TODO: play_game() 구현 예정
             elif choice == 2:
                 self.add_quiz()
-                # TODO: add_quiz() 구현 예정
             elif choice == 3:
                 self.show_list()
-                # TODO: show_list() 구현 예정
             elif choice == 4:
                 self.show_best_score()
             elif choice == 5:
