@@ -41,18 +41,40 @@ class QuizGame:
 
     def load_data(self):
         """파일이 없거나 손상된 경우를 처리하며 데이터를 불러옵니다."""
-        # 기본 퀴즈 데이터 (최소 5개 주제에 맞춰 준비 권장)
+        # [미션] 본인이 선택한 주제의 퀴즈 5개 직접 작성
         default_quizzes = [
-            {"question": "Python의 창시자는?", "choices": ["Guido", "Linus", "Bjarne", "James"], "answer": 1},
-            {"question": "JSON의 약자는?", "choices": ["Java Standard Object", "JavaScript Object Notation", "Just Simple Object", "None"], "answer": 2},
-            {"question": "리스트에서 마지막 요소를 제거하는 함수는?", "choices": ["remove()", "delete()", "pop()", "clear()"], "answer": 3},
-            {"question": "Python에서 사용되는 논리값은?", "choices": ["True/False", "Yes/No", "High/Low", "On/Off"], "answer": 1},
-            {"question": "데이터를 저장하는 JSON 인코딩 형식은?", "choices": ["UTF-8", "ASCII", "EUC-KR", "ISO-8859"], "answer": 1}
+            {
+                "question": "세계에서 가장 큰 섬은 어디일까요?",
+                "choices": ["마다가스카르", "그린란드", "보르네오", "뉴기니"],
+                "answer": 2
+            },
+            {
+                "question": "대한민국의 국보 1호는 무엇일까요?",
+                "choices": ["다보탑", "석굴암", "숭례문", "경복궁"],
+                "answer": 3
+            },
+            {
+                "question": "영화 '기생충'의 감독은 누구일까요?",
+                "choices": ["박찬욱", "봉준호", "이창동", "홍상수"],
+                "answer": 2
+            },
+            {
+                "question": "태양계에서 가장 큰 행성은 무엇일까요?",
+                "choices": ["지구", "화성", "목성", "토성"],
+                "answer": 3
+            },
+            {
+                "question": "컴퓨터의 뇌 역할을 하는 부품은?",
+                "choices": ["RAM", "SSD", "GPU", "CPU"],
+                "answer": 4
+            }
         ]
 
         if not os.path.exists(self.file_path):
             print("📂 데이터 파일이 없어 기본 데이터를 사용합니다.")
-            self.quizzes = [Quiz(**q) for q in default_quizzes]
+            # [미션] Quiz 클래스의 인스턴스로 퀴즈 생성
+            # 아래 한 줄이 딕셔너리 데이터를 Quiz 객체 5개로 만드는 마법입니다.
+            self.quizzes = [Quiz(q["question"], q["choices"], q["answer"]) for q in default_quizzes]
             self.best_score = 0
             return
 
