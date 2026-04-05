@@ -57,3 +57,7 @@ README.md: 프로젝트 설명 문서
 quizzes 	List (Array)
 
 best_score	Integer	기록된 최고 점수
+
+
+---
+*이 문구는 Git 실습 중에 추가되었습니다.*
