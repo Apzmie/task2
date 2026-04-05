@@ -49,3 +49,4 @@ class QuizGame:
 if __name__ == "__main__":
     game = QuizGame()
     game.run()
+    
