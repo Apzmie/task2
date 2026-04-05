@@ -40,8 +40,7 @@ class QuizGame:
         self.load_data()
 
     def load_data(self):
-        """파일이 없거나 손상된 경우를 처리하며 데이터를 불러옵니다."""
-        # [미션] 본인이 선택한 주제의 퀴즈 5개 직접 작성
+        """[요구사항] 파일 로드 및 예외 처리"""
         default_quizzes = [
             {
                 "question": "세계에서 가장 큰 섬은 어디일까요?",
@@ -70,40 +69,44 @@ class QuizGame:
             }
         ]
 
+        # [요구사항] 파일이 없는 경우 기본 데이터 사용
         if not os.path.exists(self.file_path):
-            print("📂 데이터 파일이 없어 기본 데이터를 사용합니다.")
-            # [미션] Quiz 클래스의 인스턴스로 퀴즈 생성
-            # 아래 한 줄이 딕셔너리 데이터를 Quiz 객체 5개로 만드는 마법입니다.
-            self.quizzes = [Quiz(q["question"], q["choices"], q["answer"]) for q in default_quizzes]
+            print("📂 데이터 파일이 없습니다. 기본 데이터를 불러옵니다.")
+            self.quizzes = [Quiz(**q) for q in default_quizzes]
             self.best_score = 0
             return
 
+        # [요구사항] 파일 읽기 try/except 예외 처리
         try:
-            with open(self.file_path, "r", encoding="utf-8") as f:
+            with open(self.file_path, "r", encoding="utf-8") as f: # UTF-8 인코딩 적용
                 data = json.load(f)
-                raw_quizzes = data.get("quizzes", default_quizzes)
-                # 딕셔너리 리스트를 Quiz 객체 리스트로 변환
+                # [요구사항] 스키마 구조 확인 (quizzes, best_score)
+                raw_quizzes = data.get("quizzes", [])
+                if not raw_quizzes: # 파일은 있는데 퀴즈가 비어있는 경우 대비
+                    raw_quizzes = default_quizzes
+                
                 self.quizzes = [Quiz(**q) for q in raw_quizzes]
                 self.best_score = data.get("best_score", 0)
                 print(f"✅ 데이터를 불러왔습니다. (퀴즈 {len(self.quizzes)}개, 최고점수 {self.best_score})")
-        except (json.JSONDecodeError, IOError, TypeError):
-            print("⚠️ 데이터 파일이 손상되었습니다. 기본 데이터로 복구합니다.")
+        
+        except (json.JSONDecodeError, IOError, KeyError):
+            # [요구사항] 파일 손상 시 안내 메시지 출력 및 기본 데이터 복구
+            print("⚠️ 데이터 파일이 손상되었습니다. 기본 데이터로 초기화합니다.")
             self.quizzes = [Quiz(**q) for q in default_quizzes]
             self.best_score = 0
 
     def save_data(self):
-        """현재 상태를 state.json에 저장합니다."""
+        """[요구사항] 파일 저장 기능 구현"""
         try:
             data = {
-                # Quiz 객체들을 다시 딕셔너리 형태로 바꿔서 저장
-                "quizzes": [q.to_dict() for q in self.quizzes],
+                "quizzes": [q.to_dict() for q in self.quizzes], # 일관된 스키마 유지
                 "best_score": self.best_score
             }
-            with open(self.file_path, "w", encoding="utf-8") as f:
+            with open(self.file_path, "w", encoding="utf-8") as f: # UTF-8 인코딩 권장
                 json.dump(data, f, ensure_ascii=False, indent=4)
-            print("💾 데이터가 안전하게 저장되었습니다.")
-        except Exception as e:
-            print(f"❌ 저장 중 오류 발생: {e}")
+            print("💾 데이터가 state.json에 안전하게 저장되었습니다.")
+        except IOError as e:
+            print(f"❌ 파일 쓰기 오류 발생: {e}")
 
     def get_valid_input(self, prompt, min_val, max_val):
         """숫자 입력 예외 처리를 전담하는 메서드입니다."""
