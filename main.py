@@ -200,6 +200,24 @@ class QuizGame:
         
         print("\n✅ 퀴즈가 성공적으로 추가되었습니다!")
 
+    def show_list(self):
+        """3. 저장된 퀴즈 목록을 확인합니다."""
+        print("\n" + "="*40)
+        # [요구사항] 퀴즈가 없는 경우 처리
+        if not self.quizzes:
+            print("⚠️ 등록된 퀴즈가 없습니다. 퀴즈를 먼저 추가해 주세요.")
+            print("="*40)
+            return
+
+        print(f"📋 등록된 퀴즈 목록 (총 {len(self.quizzes)}개)")
+        print("-" * 40)
+        
+        # [요구사항] 저장된 퀴즈 목록 출력
+        for i, quiz in enumerate(self.quizzes, 1):
+            print(f"[{i}] {quiz.question}")
+        
+        print("="*40)
+
     def run(self):
         while self.is_running:
             print("\n========================================")
@@ -221,7 +239,7 @@ class QuizGame:
                 self.add_quiz()
                 # TODO: add_quiz() 구현 예정
             elif choice == 3:
-                print("\n📋 등록된 퀴즈 목록을 출력합니다.")
+                self.show_list()
                 # TODO: show_list() 구현 예정
             elif choice == 4:
                 print(f"\n🏆 최고 점수: {self.best_score}점")
