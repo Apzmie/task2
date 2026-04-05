@@ -1,56 +1,51 @@
+import json
+import os
+
 class Quiz:
     def __init__(self, question, choices, answer):
-        self.question = question   # 문제 내용
-        self.choices = choices     # 보기 4개 (리스트)
-        self.answer = answer       # 정답 번호 (1~4)
+        self.question = question
+        self.choices = choices
+        self.answer = answer
 
     def display(self, index):
-        """문제를 화면에 출력하는 기능"""
         print(f"\n[문제 {index}] {self.question}")
         for i, choice in enumerate(self.choices, 1):
             print(f"{i}. {choice}")
 
-    def is_correct(self, user_answer):
-        """정답 확인 기능"""
-        return self.answer == user_answer
+class QuizGame:
+    def __init__(self):
+        self.quizzes = []
+        self.best_score = 0
+        self.load_data()
 
-# --- 여기서부터 실제 게임 데이터와 실행 로직입니다 ---
+    def load_data(self):
+        # 파일이 있으면 불러오고, 없으면 기본값 세팅 (나중에 구현)
+        self.set_default_quizzes()
 
-def run_game():
-    # 1. 퀴즈 문제 5개 생성
-    quiz_list = [
-        Quiz("대한민국의 수도는 어디인가요?", ["인천", "광주", "서울", "부산"], 3),
-        Quiz("파이썬(Python)을 만든 사람은?", ["귀도 반 로섬", "제임스 고슬링", "빌 게이츠", "마크 저커버그"], 1),
-        Quiz("태양계에서 가장 큰 행성은?", ["지구", "화성", "목성", "토성"], 3),
-        Quiz("컴퓨터의 '뇌' 역할을 하는 부품은?", ["RAM", "HDD", "CPU", "GPU"], 3),
-        Quiz("MBTI 중 '성인군자형'으로 불리는 유형은?", ["ISFJ", "ENFP", "ISTP", "ENTJ"], 1)
-    ]
+    def set_default_quizzes(self):
+        self.quizzes = [
+            Quiz("대한민국의 수도는?", ["인천", "광주", "서울", "부산"], 3),
+            Quiz("파이썬 창시자는?", ["귀도", "제임스", "빌", "마크"], 1),
+            Quiz("태양계에서 가장 큰 행성은?", ["지구", "화성", "목성", "토성"], 3),
+            Quiz("CPU의 뜻은?", ["중앙처리장치", "기억장치", "입력장치", "출력장치"], 1),
+            Quiz("1+1은?", ["1", "2", "3", "4"], 2)
+        ]
 
-    score = 0
-    print("┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓")
-    print("┃      🔥 초간단 퀴즈 게임 🔥      ┃")
-    print("┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛")
+    def run(self):
+        while True:
+            print("\n" + "="*20)
+            print("1. 퀴즈 풀기\n2. 퀴즈 추가\n3. 목록 보기\n4. 점수 확인\n5. 종료")
+            print("="*20)
+            choice = input("선택: ").strip()
 
-    # 2. 문제 하나씩 출제
-    for i, q in enumerate(quiz_list, 1):
-        q.display(i)
-        
-        try:
-            # 사용자로부터 정답 번호 입력받기
-            user_input = int(input("정답 번호를 입력하세요 (1~4): "))
-            
-            if q.is_correct(user_input):
-                print("정답입니다! ✨")
-                score += 1
+            if choice == "1":
+                print("퀴즈 풀기 기능을 곧 구현합니다!")
+            elif choice == "5":
+                print("게임을 종료합니다.")
+                break
             else:
-                print(f"아쉽네요. 정답은 {q.answer}번입니다. 😢")
-        except ValueError:
-            print("❌ 숫자만 입력해주세요! 이번 문제는 틀린 것으로 처리됩니다.")
-
-    # 3. 최종 결과 발표
-    print("\n" + "="*30)
-    print(f"게임 종료! 당신의 점수는 {score} / {len(quiz_list)}점 입니다.")
-    print("="*30)
+                print("번호를 다시 확인해주세요.")
 
 if __name__ == "__main__":
-    run_game()
+    game = QuizGame()
+    game.run()
