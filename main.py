@@ -165,6 +165,41 @@ class QuizGame:
             self.best_score = final_percentage
             self.save_data() # 점수 업데이트 후 자동 저장
 
+    def add_quiz(self):
+        """2. 새로운 퀴즈를 등록합니다."""
+        print("\n" + "="*40)
+        print("📌 새로운 퀴즈를 추가합니다.")
+        print("="*40)
+
+        # 1. 문제 입력 (빈 칸 방지)
+        while True:
+            question = input("문제를 입력하세요: ").strip()
+            if question:
+                break
+            print("⚠️ 문제는 비워둘 수 없습니다.")
+
+        # 2. 선택지 4개 입력
+        choices = []
+        for i in range(1, 5):
+            while True:
+                choice = input(f"선택지 {i}: ").strip()
+                if choice:
+                    choices.append(choice)
+                    break
+                print(f"⚠️ 선택지 {i}을(를) 입력해 주세요.")
+
+        # 3. 정답 번호 입력 (우리가 만든 보디가드 메서드 활용!)
+        answer = self.get_valid_input("정답 번호 (1-4): ", 1, 4)
+
+        # 4. Quiz 객체 생성 및 리스트 추가
+        new_quiz = Quiz(question, choices, answer)
+        self.quizzes.append(new_quiz)
+
+        # 5. 파일에 즉시 저장 (데이터 영속성)
+        self.save_data()
+        
+        print("\n✅ 퀴즈가 성공적으로 추가되었습니다!")
+
     def run(self):
         while self.is_running:
             print("\n========================================")
@@ -183,7 +218,7 @@ class QuizGame:
                 self.play_game()
                 # TODO: play_game() 구현 예정
             elif choice == 2:
-                print("\n📌 퀴즈 추가 기능을 실행합니다.")
+                self.add_quiz()
                 # TODO: add_quiz() 구현 예정
             elif choice == 3:
                 print("\n📋 등록된 퀴즈 목록을 출력합니다.")

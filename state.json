@@ -49,6 +49,16 @@
                 "CPU"
             ],
             "answer": 4
+        },
+        {
+            "question": "1 + 1?",
+            "choices": [
+                "1",
+                "2",
+                "3",
+                "4"
+            ],
+            "answer": 2
         }
     ],
     "best_score": 60
