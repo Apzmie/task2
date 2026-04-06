@@ -26,6 +26,9 @@ cd task2
 
 # 프로그램 실행
 python main.py
+
+# 원격 저장소의 최신 변경 사항 확인 및 병합 (로컬에 커밋한 수정 사항 말고 커밋하지 않은 수정 사항 있을때는 하면 안좋음)
+git pull origin main
 ```
 
 4. 기능 목록
@@ -38,7 +41,7 @@ python main.py
 
 ![add_quiz](./screenshots/add_quiz.png)
 
-퀴즈 목록: 현재 등록된 모든 퀴즈의 질문 리스트를 확인합니다.
+퀴즈 목록: 현재 등록된 모든 퀴즈의 질문 리스트를 확인합니다. (기본 퀴즈가 5개 이상 포함)
 
 ![quiz_list](./screenshots/quiz_list.png)
 
