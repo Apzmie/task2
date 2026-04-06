@@ -32,11 +32,19 @@ python main.py
 
 퀴즈 풀기: 저장된 문제를 풀고 점수를 계산하며, 최고 점수 달성 시 기록을 갱신합니다.
 
+![play](./screenshots/play.png)
+
 퀴즈 추가: 사용자가 직접 문제, 보기(4개), 정답 번호를 입력하여 새 퀴즈를 등록합니다.
+
+![add_quiz](./screenshots/add_quiz.png)
 
 퀴즈 목록: 현재 등록된 모든 퀴즈의 질문 리스트를 확인합니다.
 
+![quiz_list](./screenshots/quiz_list.png)
+
 점수 확인: 역대 최고 점수(최고 정답률)를 확인합니다.
+
+![score](./screenshots/score.png)
 
 데이터 자동 저장: 프로그램 종료나 중단 시 모든 데이터는 state.json에 안전하게 기록됩니다.
 
@@ -57,6 +65,12 @@ README.md: 프로젝트 설명 문서
 quizzes 	List (Array)
 
 best_score	Integer	기록된 최고 점수
+
+
+git_log
+![git_log](./screenshots/git_log.png)
+
+
 
 
 ---
