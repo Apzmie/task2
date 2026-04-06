@@ -66,33 +66,6 @@ README.md: 프로젝트 설명 문서
 
 <img src="./screenshots/git_log.png" width="500">
 
-입력 예외 처리
-```bash
-def get_valid_input(self, prompt, min_val, max_val):
-    """숫자 입력 예외 처리를 전담하는 메서드입니다."""
-    while True:
-        try:
-            user_input = input(prompt).strip() # .strip()으로 앞뒤 공백 제거
-            
-            # 1. 빈 입력/공백 처리
-            if not user_input:
-                print("⚠️ 입력이 비어 있습니다. 숫자를 입력해 주세요.")
-                continue
-            
-            # 2. 문자(데이터 타입) 처리
-            choice = int(user_input) 
-            
-            # 3. 범위 밖 숫자 처리
-            if min_val <= choice <= max_val:
-                return choice
-            else:
-                print(f"⚠️ {min_val}~{max_val} 사이의 숫자를 입력하세요.")
-                
-        except ValueError:
-            # 문자열 입력 시 발생하는 에러 포착
-            print("⚠️ 숫자가 아닙니다. 다시 입력해 주세요.")
-```
-
 ## 코드 구조 및 설계 상세
 
 1. 클래스 역할 분리
