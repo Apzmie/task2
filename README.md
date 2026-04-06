@@ -35,19 +35,19 @@ git pull origin main
 
 퀴즈 풀기: 저장된 문제를 풀고 점수를 계산하며, 최고 점수 달성 시 기록을 갱신합니다.
 
-![play](./screenshots/play.png)
+<img src="./screenshots/play.png" width="500">
 
 퀴즈 추가: 사용자가 직접 문제, 보기(4개), 정답 번호를 입력하여 새 퀴즈를 등록합니다.
 
-![add_quiz](./screenshots/add_quiz.png)
+<img src="./screenshots/add_quiz.png" width="500">
 
 퀴즈 목록: 현재 등록된 모든 퀴즈의 질문 리스트를 확인합니다. (기본 퀴즈가 5개 이상 포함)
 
-![quiz_list](./screenshots/quiz_list.png)
+<img src="./screenshots/quiz_list.png" width="500">
 
 점수 확인: 역대 최고 점수(최고 정답률)를 확인합니다.
 
-![score](./screenshots/score.png)
+<img src="./screenshots/score.png" width="500">
 
 데이터 자동 저장: 프로그램 종료나 중단 시 모든 데이터는 state.json에 안전하게 기록됩니다.
 
@@ -64,7 +64,7 @@ README.md: 프로젝트 설명 문서
 
 10개 이상의 커밋이나 브랜치 병합 기록(git log)
 
-![git_log](./screenshots/git_log.png)
+<img src="./screenshots/git_log.png" width="500">
 
 입력 예외 처리
 ```bash
