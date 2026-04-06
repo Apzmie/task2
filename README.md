@@ -67,7 +67,8 @@ quizzes 	List (Array)
 best_score	Integer	기록된 최고 점수
 
 
-git_log
+10개 이상의 커밋이나 브랜치 병합 기록(git log)
+
 ![git_log](./screenshots/git_log.png)
 
 
