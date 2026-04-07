@@ -78,7 +78,7 @@ class QuizGame:
                 new_quiz = Quiz(question=q['question'], choices=q['choices'], answer=q['answer'])
                 temp_list.append(new_quiz)
             self.quizzes = temp_list
-            # self.quizzes 리스트 내부 (파이썬 전용 기계들)
+            # self.quizzes 리스트 내부
             #[
             #    <Quiz 객체1: question="섬 이름?", choices=[...], answer=2>,
             #    <Quiz 객체2: question="국보 1호?", choices=[...], answer=3>,
