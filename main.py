@@ -101,7 +101,11 @@ class QuizGame:
         except (json.JSONDecodeError, IOError, KeyError):
             # [요구사항] 파일 손상 시 안내 메시지 출력 및 기본 데이터 복구
             print("⚠️ 데이터 파일이 손상되었습니다. 기본 데이터로 초기화합니다.")
-            self.quizzes = [Quiz(**q) for q in default_quizzes]
+            temp_list = []
+                for q in default_quizzes:
+                    new_quiz = Quiz(question=q['question'], choices=q['choices'], answer=q['answer'])
+                    temp_list.append(new_quiz)
+                self.quizzes = temp_list
             self.best_score = 0
 
     def save_data(self):
