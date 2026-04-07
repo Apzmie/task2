@@ -72,7 +72,12 @@ class QuizGame:
         # [요구사항] 파일이 없는 경우 기본 데이터 사용
         if not os.path.exists(self.file_path):
             print("📂 데이터 파일이 없습니다. 기본 데이터를 불러옵니다.")
-            self.quizzes = [Quiz(**q) for q in default_quizzes]
+            temp_list = []
+            for q in default_quizzes:
+                # 딕셔너리에서 키를 하나씩 꺼내서 Quiz 객체를 만듭니다.
+                new_quiz = Quiz(question=q['question'], choices=q['choices'], answer=q['answer'])
+                temp_list.append(new_quiz)
+            self.quizzes = temp_list
             self.best_score = 0
             return
 
@@ -85,7 +90,11 @@ class QuizGame:
                 if not raw_quizzes: # 파일은 있는데 퀴즈가 비어있는 경우 대비
                     raw_quizzes = default_quizzes
                 
-                self.quizzes = [Quiz(**q) for q in raw_quizzes]
+                temp_list = []
+                for q in raw_quizzes:
+                    new_quiz = Quiz(question=q['question'], choices=q['choices'], answer=q['answer'])
+                    temp_list.append(new_quiz)
+                self.quizzes = temp_list
                 self.best_score = data.get("best_score", 0)
                 print(f"✅ 데이터를 불러왔습니다. (퀴즈 {len(self.quizzes)}개, 최고점수 {self.best_score})")
         
