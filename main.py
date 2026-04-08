@@ -33,7 +33,7 @@ class QuizGame:
     def __init__(self):
         self.file_path = "state.json"
         self.quizzes = [] # 여기에 Quiz 객체들이 담깁니다.
-        self.best_score = 0
+        self.best_score = -1
         self.is_running = True
         
         # 프로그램 시작 시 데이터 로드
@@ -180,34 +180,40 @@ class QuizGame:
         print("📌 새로운 퀴즈를 추가합니다.")
         print("="*40)
 
-        # 1. 문제 입력 (빈 칸 방지)
-        while True:
-            question = input("문제를 입력하세요: ").strip()
-            if question:
-                break
-            print("⚠️ 문제는 비워둘 수 없습니다.")
-
-        # 2. 선택지 4개 입력
-        choices = []
-        for i in range(1, 5):
+        try:
+            # 1. 문제 입력 (빈 칸 방지)
             while True:
-                choice = input(f"선택지 {i}: ").strip()
-                if choice:
-                    choices.append(choice)
+                question = input("문제를 입력하세요: ").strip()
+                if question:
                     break
-                print(f"⚠️ 선택지 {i}을(를) 입력해 주세요.")
+                print("⚠️ 문제는 비워둘 수 없습니다.")
 
-        # 3. 정답 번호 입력 (우리가 만든 보디가드 메서드 활용!)
-        answer = self.get_valid_input("정답 번호 (1-4): ", 1, 4)
+            # 2. 선택지 4개 입력
+            choices = []
+            for i in range(1, 5):
+                while True:
+                    choice = input(f"선택지 {i}: ").strip()
+                    if choice:
+                        choices.append(choice)
+                        break
+                    print(f"⚠️ 선택지 {i}을(를) 입력해 주세요.")
 
-        # 4. Quiz 객체 생성 및 리스트 추가
-        new_quiz = Quiz(question, choices, answer)
-        self.quizzes.append(new_quiz)
+            # 3. 정답 번호 입력 (내부에서 ValueError 등 처리됨)
+            answer = self.get_valid_input("정답 번호 (1-4): ", 1, 4)
 
-        # 5. 파일에 즉시 저장 (데이터 영속성)
-        self.save_data()
-        
-        print("\n✅ 퀴즈가 성공적으로 추가되었습니다!")
+            # 4. Quiz 객체 생성 및 리스트 추가
+            new_quiz = Quiz(question, choices, answer)
+            
+            # 5. 파일 저장 시도 후 성공 시에만 리스트에 추가 (데이터 무결성)
+            # 혹은 추가 후 저장 실패 시 사용자에게 알림
+            self.quizzes.append(new_quiz)
+            self.save_data()
+            
+            print("\n✅ 퀴즈가 성공적으로 추가되었습니다!")
+
+        except KeyboardInterrupt:
+            # 사용자가 입력 도중 취소했을 때
+            print("\n\n⚠️ 퀴즈 추가가 취소되었습니다. 메인 메뉴로 돌아갑니다.")
 
     def show_list(self):
         """3. 저장된 퀴즈 목록을 확인합니다."""
@@ -232,7 +238,7 @@ class QuizGame:
         print("\n" + "="*40)
         # [요구사항] 아직 퀴즈를 풀지 않은 경우 (최고 점수가 0인 경우) 처리
         if self.best_score == 0:
-            print("📜 아직 기록된 점수가 없습니다.")
+            print("📜 아직 기록된 점수가 없거나 이전에 기록된 점수가 0점입니다.")
             print("   첫 번째 퀴즈를 풀어 최고 기록을 세워보세요!")
         else:
             print(f"🏆 현재 최고 점수: {self.best_score}점")
