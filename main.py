@@ -79,7 +79,7 @@ class QuizGame:
             #    <Quiz 객체2: question="국보 1호?", choices=[...], answer=3>,
             #    <Quiz 객체3: question="감독 이름?", choices=[...], answer=2>
             #]
-            self.best_score = 0
+            self.best_score = -1
             return
 
         # [요구사항] 파일 읽기 try/except 예외 처리
@@ -92,14 +92,14 @@ class QuizGame:
                     raw_quizzes = default_quizzes
                 
                 self.quizzes = [Quiz(**q) for q in raw_quizzes]
-                self.best_score = data.get("best_score", 0)
+                self.best_score = data.get("best_score", -1)
                 print(f"✅ 데이터를 불러왔습니다. (퀴즈 {len(self.quizzes)}개, 최고점수 {self.best_score})")
         
         except (json.JSONDecodeError, IOError, KeyError):
             # [요구사항] 파일 손상 시 안내 메시지 출력 및 기본 데이터 복구
             print("⚠️ 데이터 파일이 손상되었습니다. 기본 데이터로 초기화합니다.")
             self.quizzes = [Quiz(**q) for q in default_quizzes]
-            self.best_score = 0
+            self.best_score = -1
 
     def save_data(self):
         """[요구사항] 파일 저장 기능 구현"""
@@ -237,8 +237,8 @@ class QuizGame:
         """4. 최고 점수를 확인합니다."""
         print("\n" + "="*40)
         # [요구사항] 아직 퀴즈를 풀지 않은 경우 (최고 점수가 0인 경우) 처리
-        if self.best_score == 0:
-            print("📜 아직 기록된 점수가 없거나 이전에 기록된 점수가 0점입니다.")
+        if self.best_score == -1:
+            print("📜 아직 기록된 점수가 없습니다.")
             print("   첫 번째 퀴즈를 풀어 최고 기록을 세워보세요!")
         else:
             print(f"🏆 현재 최고 점수: {self.best_score}점")
